@@ -1,52 +1,69 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define TRUE 1
+#define FALSE 0
+
 struct node {
     int data;
     struct node *next;
 };
 
-void insert(void);
+/* points to the head node */
+struct node *head = NULL;
+
+void insert_at_head(void);
 void delete(void);
 void contains(void);
 
 int main()
 {
-    struct node *head = NULL;
-    struct node *second = NULL;
-    struct node *tail = NULL;
+    char option;
+    int quit = FALSE;
 
-    /* allocate 3 nodes in heap */
-    head = malloc(sizeof(struct node));
-    second = malloc(sizeof(struct node));
-    tail = malloc(sizeof(struct node));
+    while (quit == FALSE) {
+        printf("Enter an option: ");
+        scanf(" %c", &option);
 
-    head->data = 1;
-    head->next = second;
+        while(getchar() != '\n')
+            ;
+        switch (option) {
+            case 'i': insert_at_head();
+                      break;
+            case 'q': quit = TRUE;
+                      break;
+            default: printf("Not a valid option\n");
+        }
+        printf("\n");
+    }
 
-    second->data = 2;
-    second->next = tail;
-
-    tail->data = 3;
-    tail->next = NULL;
-
-    printf("Head data: %d\n", head->data);
-    printf("Address of next: %p\n", head->next);
-    free(head);
-    printf("%p", head);
+    printf("Exiting.\n");
 
     return 0;
 }
 
-/* insert: insert an integer value into a node */
-void insert(void)
+/* insert: insert an integer value into the head of list, not ordered */
+void insert_at_head(void)
 {
-    struct node *cur, *prev, *new_node;
+    struct node *new_node;
 
     new_node = malloc(sizeof(struct node));
     /* if space cannot be allocated for node, print message */
-    if (new_node = NULL) {
-        print("Could not allocate space for new list member\n");
+    if (new_node == NULL) {
+        printf("Could not allocate space for new list member\n");
+        return;
     }
-    
+
+    printf("Enter an whole number to store in the list: ");
+    scanf("%d", &new_node->data);
+
+    if (head == NULL) {
+        head = new_node;
+        head->next = NULL;
+    } else {
+        new_node->next = head;
+        head = new_node;
+    }
+
+    printf("<%d> inserted at %p\n", head->data, &head);
 }

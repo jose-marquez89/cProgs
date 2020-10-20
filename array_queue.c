@@ -43,7 +43,11 @@ int main()
                 else
                   printf("Value %i returned from queue\n", return_val);
                 break;
-      case 'e': printf("Checking...\n");
+      case 'e': printf("Checking queue...\n");
+                if (is_empty(f) == TRUE)
+                  printf("Queue is empty\n");
+                else
+                  printf("The queue is not empty\n");
                 break;
       default: printf("Enter a valid selection\n");
                break;
@@ -104,6 +108,5 @@ int get(int q[], int *f, int *r, int *c)
     *f = -1;
     *r = 0;
   }
-
   return return_val;
 }

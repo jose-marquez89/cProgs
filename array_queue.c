@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_SIZE 5
+#define MAX_SIZE 1000 
 #define TRUE 1
 #define FALSE 0
 

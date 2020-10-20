@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_SIZE 100
+#define MAX_SIZE 5
 #define TRUE 1
 #define FALSE 0
 
@@ -31,15 +31,17 @@ int main()
     printf("-> ");
     scanf("%s", &selection);
     switch (selection) {
-      case 'q': printf("Front: %i - Rear: %i, Qsize: %i\n", front, rear, qsize);
-                return 0;
+      case 'q': return 0;
       case 'p': printf("Enter value to put in queue: ");
                 scanf("%i", &input);
                 printf("Putting %i in queue...\n", input);
                 put(queue, input, f, r, qs);
                 break;
       case 'g': return_val = get(queue, f, r, qs);
-                printf("Value %i returned from queue\n", return_val);
+                if (return_val == -1)
+                  printf("Queue is empty!\n");
+                else
+                  printf("Value %i returned from queue\n", return_val);
                 break;
       case 'e': printf("Checking...\n");
                 break;
@@ -59,7 +61,6 @@ int is_empty(int *f)
 
 void put(int q[], int v, int *f, int *r, int *c)
 {
-  printf("*f: %i - *r: %i - *c: %i\n", *f, *r, *c);
   if (*c == MAX_SIZE) {
     printf("Queue has reached capacity!\n");
     return;
@@ -85,11 +86,11 @@ int get(int q[], int *f, int *r, int *c)
   int return_val;
 
   if (is_empty(f) == TRUE) {
-    printf("Queue is empty!\n");
     return -1;
   }
 
   if (*f == MAX_SIZE-1) {
+    printf("*f has reached max size\n");
     temp = *f;
     *f = 0;
     return_val = q[temp];
@@ -97,13 +98,12 @@ int get(int q[], int *f, int *r, int *c)
   else
     return_val =  q[(*f)++];
 
+  (*c)--;
   /* Reset front and rear if queue has been emptied */
-  if (*f > *r) {
-    printf("*f was more than or equal to *r\n*f: %i - *r: %i\n", *f, *r);
+  if (*c == 0) {
     *f = -1;
     *r = 0;
   }
 
-  (*c)--;
   return return_val;
 }

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_SIZE 1000 
+#define MAX_SIZE 1000
 #define TRUE 1
 #define FALSE 0
 
@@ -16,12 +16,7 @@ int main()
   int queue[MAX_SIZE];
   int front = -1, rear = 0, qsize = 0;
   int input, return_val;
-  int *f, *r, *qs;
   char selection;
-
-  f = &front;
-  r = &rear;
-  qs = &qsize;
 
   printf("Queue created. Select an option:\n");
   printf("[q]: Quit\n[p]: Put item in queue\n[g]: Get item from queue\n");
@@ -29,22 +24,22 @@ int main()
 
   for (;;) {
     printf("-> ");
-    scanf("%s", &selection);
+    scanf(" %c", &selection);
     switch (selection) {
       case 'q': return 0;
       case 'p': printf("Enter value to put in queue: ");
-                scanf("%i", &input);
+                scanf(" %i", &input);
                 printf("Putting %i in queue...\n", input);
-                put(queue, input, f, r, qs);
+                put(queue, input, &front, &rear, &qsize);
                 break;
-      case 'g': return_val = get(queue, f, r, qs);
+      case 'g': return_val = get(queue, &front, &rear, &qsize);
                 if (return_val == -1)
                   printf("Queue is empty!\n");
                 else
                   printf("Value %i returned from queue\n", return_val);
                 break;
       case 'e': printf("Checking queue...\n");
-                if (is_empty(f) == TRUE)
+                if (is_empty(&front) == TRUE)
                   printf("Queue is empty\n");
                 else
                   printf("The queue is not empty\n");
